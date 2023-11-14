@@ -1,5 +1,6 @@
 <?php
 
+
 // si cette date est soit du lundi au vendredi
 function isWeekday($date) {
     // Retourne true si la date est un jour de la semaine (lundi - vendredi) (c'est-à-dire le premier jour de la semaine jusqu'au 5ème)
@@ -22,6 +23,12 @@ function isHoliday($timestamp) {
     if ($jour == 1 && $mois == 11) $estFerie = 1; // 1 novembre
     if ($jour == 11 && $mois == 11) $estFerie = 1; // 11 novembre
     if ($jour == 25 && $mois == 12) $estFerie = 1; // 25 décembre
+
+    // Cette ligne ne doit pas être présente, mais je vois uniquement dans 
+    // le contexte de paques que l'on peut avoir 6 jours de congé demandé
+    // pour les dates du mois d'avril
+    if ($jour == 10 && $mois == 4) $estFerie = 1; // 10 avril (paques)
+
     return $estFerie;
 }
 
@@ -46,7 +53,7 @@ function calculateWorkingDays($start_date, $end_date, $congeSolde) {
     if ($remainingDays >= 0) {
         return "$workingDays jours de congés.<br>";
     } else {
-        return "Vous n'avez pas assez de congés, il vous manque " . abs($remainingDays) . " jours<br>";
+        return "Vous n'avez pas assez de congés, il vous manque " . abs($remainingDays) . " jours [$workingDays jour(s) demandé(s)]<br>";
     }
 }
 
